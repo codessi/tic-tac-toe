@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-//connect with css sass
 <html>
     <head>
-      <title>Example</title>
+      <title>Tic Tac Toe</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
 
       <!-- Do not add `link` tags-->
@@ -13,6 +12,52 @@
       <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
     </head>
     <body>
-      <h1>Browser Template</h1>
+      <h1>Tic Tac Toe</h1>
+      <h2>work in progress</h2>
+      <p id="message"></p>
+      <section>
+        <form id="sign-up-user-form">
+          <fieldset>
+            <legend>Sign Up</legend>
+            <label for="sign-up-user">User Email</label>
+            <input id="sign-up-user" type="email" name="credentials[email]" placeholder="Email">
+            <label for="sign-up-password">Password</label>
+            <input id="sign-up-password" type="password" name="credentials[password]" placeholder="Password">
+            <label for="sign-up-password_confirmation">Please confirm password</label>
+            <input id="sign-up-password_confirmation" type="password" name="credentials[password_confirmation]" placeholder="Confirm Password">
+            <input type="submit" value="Sign Up">
+          </fieldset>
+        </form>
+      </section>
+      <section>
+        <form id="sign-in-user-form">
+          <fieldset>
+            <legend>Sign In => Play</legend>
+            <label for="sign-in-user">User Email</label>
+            <input id="sign-in-user" type="email" name="credentials[email]" placeholder="Email">
+            <label for="sign-in-password">Password</label>
+            <input id="sign-in-password" type="password" name="credentials[password]" placeholder="Password">
+            <input type="submit" value="Playtime">
+          </fieldset>
+        </form>
+      </section>
+      <section>
+        <form id="change-password-user-form">
+          <fieldset>
+            <legend>Change User Password</legend>
+  <!-- <input id="sign-in-user" type="email" name="credentials[email]" placeholder="Email"> -->
+            <input type="password" name="passwords[old]" placeholder="Old Password">
+            <input type="password" name="passwords[new]" placeholder="New Password">
+            <input type="submit" value="Change Password">
+          </fieldset>
+        </form>
+      </section>
+      <br>
+      <br>
+    <section>
+        <form id='sign-out'>
+          <input type='submit' value='Sign out'>
+     </form>
+  </section>
     </body>
 </html>
