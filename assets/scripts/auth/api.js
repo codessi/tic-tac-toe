@@ -1,23 +1,24 @@
 'use strict'
 
 const config = require('./../config')
-const store = require('../store')
+const store = require('./../store')
 
-const signUp = function (data) {
+const signUp = (data) => {
   return $.ajax({
     url: config.apiUrl + '/sign-up',
     method: 'POST',
     data: data
   })
 }
-const signIn = function (data) {
+const signIn = (data) => {
   return $.ajax({
     url: config.apiUrl + '/sign-in',
     method: 'POST',
     data: data
   })
 }
-const changePassword = function (data) {
+
+const changePassword = (data) => {
   return $.ajax({
     url: config.apiUrl + '/change-password',
     method: 'PATCH',
@@ -27,14 +28,13 @@ const changePassword = function (data) {
     data: data
   })
 }
-const signOut = function (data) {
+const signOut = () => {
   return $.ajax({
-    url: config.apiUrl + '/change-password',
-    method: 'DELETE',
     headers: {
       Authorization: 'Bearer ' + store.user.token
     },
-    data: data
+    url: config.apiUrl + '/sign-out',
+    method: 'DELETE'
   })
 }
 
