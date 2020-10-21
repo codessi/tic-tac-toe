@@ -2,62 +2,51 @@
 
 const api = require('./api')
 const ui = require('./ui')
+const store = require('../store')
 
 let currentPlayer = 'X'
+const gameState = {
+  // moves: 0,
+  isOver: false
+  // winner: ''
+}
 
 const onBoxClick = (event) => {
-  console.log('click')
-
   const box = $(event.target)
+
+  const boxIndex = box.data('box-index')
+  console.log('box index ', boxIndex)
+  console.log('players turn ', currentPlayer)
 
   box.text(currentPlayer)
   box.css('background', 'transparent').text(currentPlayer)
 
+  api.updateGame(boxIndex, currentPlayer, gameState.isOver)
+    .then(ui.onBoxClickSuccess)
+    .catch(ui.onBoxClickFailure)
+
   currentPlayer = currentPlayer === 'O' ? 'X' : 'O'
 }
 
-$('.box').on('click', onBoxClick)
-
-
-const winningFormula = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-]
-
-// function handleResultValidation() {
-//     let roundWon = false;
-//     for (let i = 0; i <= 7; i++) {
-//         const winFormula = winningFormula[i];
-//         let a = currentGame[winFormula[0]];
-//         let b = currentGame[winFormula[1]];
-//         let c = currentGame[winFormula[2]];
-//         if (a === '' || b === '' || c === '') {
-//             continue;
-//         }
-//         if (a === b && b === c) {
-//             roundWon = true;
-//             break
-//         }
-//     }
-//         if (roundWon) {
-//             statusDisplay.innerHTML = winningMessage();
-//             gameActive = false;
-//             return;
-//         }
-//   let roundDraw = !currentGame.includes("");
-//       if (roundDraw) {
-//        statusDisplay.innerHTML = drawMessage();
-//        gameActive = false;
-//        return;
-// const winningMessage = () => `Player ${currentPlayer} has won!`;
-// const drawMessage = () => `Game ended in a draw!`;
-// const currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
+const checkWin = () => {
+  if (store.game.cells[0] === store.game.cells[1] && store.game.cells[0] === store.game.cells[2]) {
+    ui.winGameSuccess()
+  } else if (store.game.cells[0] === store.game.cells[3] && store.game.cells[0] === store.game.cells[6]) {
+    ui.winGameSuccess()
+  } else if (store.game.cells[0] === store.game.cells[4] && store.game.cells[0] === store.game.cells[8]) {
+    ui.winGameSuccess()
+  } else if (store.game.cells[1] === store.game.cells[4] && store.game.cells[1] === store.game.cells[7]) {
+    ui.winGameSuccess()
+  } else if (store.game.cells[2] === store.game.cells[5] && store.game.cells[2] === store.game.cells[8]) {
+    ui.winGameSuccess()
+  } else if (store.game.cells[2] === store.game.cells[4] && store.game.cells[2] === store.game.cells[6]) {
+    ui.winGameSuccess()
+  } else if (store.game.cells[3] === store.game.cells[4] && store.game.cells[3] === store.game.cells[5]) {
+    ui.winGameSuccess()
+  } else if (store.game.cells[6] === store.game.cells[7] && store.game.cells[6] === store.game.cells[8]) {
+    ui.winGameSuccess()
+  }
+}
 
 const onNewGame = (event) => {
   event.preventDefault()
@@ -71,18 +60,6 @@ const onNewGame = (event) => {
     .catch(ui.newGameFailure)
 }
 
-// const onUpdateGame = (event) => {
-//   event.preventDefault()
-//
-//   const button = event.click
-//   // console.log(button, 'working')
-//   console.log(JSON.stringify(button))
-// console.log(event)
-// api.updateGame(button)
-//   .then(ui.newGameSuccess)
-//   .catch(ui.newGameFailure)
-// }
-
 const onCountGame = (event) => {
   event.preventDefault()
   const button = event.click
@@ -95,6 +72,7 @@ module.exports = {
   onBoxClick: onBoxClick,
   onNewGame: onNewGame,
   // onUpdateGame: onUpdateGame,
-  onCountGame: onCountGame
+  onCountGame: onCountGame,
+  checkWin: checkWin
 
 }

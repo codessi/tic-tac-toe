@@ -1,6 +1,6 @@
 'use strict'
 
-const store = require('./../store')
+const store = require('../store')
 
 const signUpSuccess = (response) => {
   $('#message').text('You are all signed up ' + response.user.email)
@@ -45,6 +45,7 @@ const signOutSuccess = () => {
   $('#sign-out-user-form').hide()
   $('#update-game-button').hide()
   $('#index-game-button').hide()
+
   store.user = null
 }
 const signOutFailure = () => {

@@ -1,11 +1,11 @@
 'use strict'
 
-const config = require('./../config')
-const store = require('./../store')
+const config = require('../config')
+const store = require('../store')
 
 const newGame = (data) => {
   return $.ajax({
-    url: config.apiUrl + '/games',
+    url: config.apiUrl + '/games ',
     method: 'POST',
     headers: {
       Authorization: 'Bearer ' + store.user.token
@@ -23,9 +23,9 @@ const countGame = () => {
     }
   })
 }
-const updateGame = () => {
+const updateGame = (boxIndex, currentPlayer, isOver) => {
   return $.ajax({
-    url: config.apiUrl + '/games/:id ' + store.game_id,
+    url: config.apiUrl + '/games/' + store.game._id,
     method: 'PATCH',
     headers: {
       Authorization: 'Bearer ' + store.user.token
@@ -33,10 +33,10 @@ const updateGame = () => {
     data: {
       game: {
         cell: {
-          index: 0,
-          value: 'X'
+          index: boxIndex,
+          value: currentPlayer
         },
-        over: false
+        over: isOver
       }
     }
   })

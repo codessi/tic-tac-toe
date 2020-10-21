@@ -1,6 +1,7 @@
 @import '~bootstrap/scss/bootstrap';
 
 body {
+  // import a styled font here
   background: black;
   color: orange;
   align-items: center;
@@ -47,8 +48,6 @@ h2 {
 
 // why isnt this working??
 #change-password-user-form {
-  align-items: center;
-  justify-content: center;
   text-align: center;
   background: black;
   color: orange;
@@ -103,20 +102,20 @@ h2 {
   display: flex;
   height: calc(100%/3);
   justify-content: center;
-  transition: .25s ease-in;
+  transition: .50s ease-in;
   width: 50vmin;
   border: 1px white;
-  background-color: white;
+  background-color: black;
   color: white;
   font-size: 10vh;
-  border: 1px white;
-  border-bottom: 1px solid white;
-  border-right: 1px solid white;
+  border: 2px white;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
   min-height: calc(100% / 3);
   user-select: none;
 
   &:hover {
-    background-color: LightSkyBlue;
+    background-color: highlight;
   }
   // Adds a shadow to the X's and O's.
   // The shadow is placed 2px to the right and 2px below the text, respectively.
@@ -133,7 +132,7 @@ h2 {
   &:nth-child(2n) {
   background-color: black;
 }
-&:nth-child(2n+1) {
+  &:nth-child(2n+1) {
   background-color: orange;
 }
   // Select the 3 bottom boxes, `nth-last-child` selects elements based on their
