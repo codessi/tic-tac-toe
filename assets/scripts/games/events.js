@@ -2,14 +2,10 @@
 
 const api = require('./api')
 const ui = require('./ui')
-const store = require('../store')
+// const store = require('../store')
 
 let currentPlayer = 'X'
-const gameState = {
-  // moves: 0,
-  isOver: false
-  // winner: ''
-}
+// add gameState = false, run it through line 20 as argument and through API PATCH/UPDATE
 
 const onBoxClick = (event) => {
   const box = $(event.target)
@@ -20,33 +16,36 @@ const onBoxClick = (event) => {
 
   box.text(currentPlayer)
   box.css('background', 'transparent').text(currentPlayer)
-
-  api.updateGame(boxIndex, currentPlayer, gameState.isOver)
+// I need to store my current player in API and not just have it go back and forth
+  api.updateGame(boxIndex, currentPlayer)
     .then(ui.onBoxClickSuccess)
     .catch(ui.onBoxClickFailure)
 
   currentPlayer = currentPlayer === 'O' ? 'X' : 'O'
 }
-
-const checkWin = () => {
-  if (store.game.cells[0] === store.game.cells[1] && store.game.cells[0] === store.game.cells[2]) {
-    ui.winGameSuccess()
-  } else if (store.game.cells[0] === store.game.cells[3] && store.game.cells[0] === store.game.cells[6]) {
-    ui.winGameSuccess()
-  } else if (store.game.cells[0] === store.game.cells[4] && store.game.cells[0] === store.game.cells[8]) {
-    ui.winGameSuccess()
-  } else if (store.game.cells[1] === store.game.cells[4] && store.game.cells[1] === store.game.cells[7]) {
-    ui.winGameSuccess()
-  } else if (store.game.cells[2] === store.game.cells[5] && store.game.cells[2] === store.game.cells[8]) {
-    ui.winGameSuccess()
-  } else if (store.game.cells[2] === store.game.cells[4] && store.game.cells[2] === store.game.cells[6]) {
-    ui.winGameSuccess()
-  } else if (store.game.cells[3] === store.game.cells[4] && store.game.cells[3] === store.game.cells[5]) {
-    ui.winGameSuccess()
-  } else if (store.game.cells[6] === store.game.cells[7] && store.game.cells[6] === store.game.cells[8]) {
-    ui.winGameSuccess()
-  }
-}
+// TO DO
+// const checkWin = () => {
+//   // Add Parameter with currentPlayer
+//  or add box id's in html and replace store.game.cells with box id[]
+//   if (store.game.cells[0] === store.game.cells[1] && store.game.cells[0] === store.game.cells[2]) {
+//
+//     ui.winGameSuccess()
+//   } else if (store.game.cells[0] === store.game.cells[3] && store.game.cells[0] === store.game.cells[6]) {
+//     ui.winGameSuccess()
+//   } else if (store.game.cells[0] === store.game.cells[4] && store.game.cells[0] === store.game.cells[8]) {
+//     ui.winGameSuccess()
+//   } else if (store.game.cells[1] === store.game.cells[4] && store.game.cells[1] === store.game.cells[7]) {
+//     ui.winGameSuccess()
+//   } else if (store.game.cells[2] === store.game.cells[5] && store.game.cells[2] === store.game.cells[8]) {
+//     ui.winGameSuccess()
+//   } else if (store.game.cells[2] === store.game.cells[4] && store.game.cells[2] === store.game.cells[6]) {
+//     ui.winGameSuccess()
+//   } else if (store.game.cells[3] === store.game.cells[4] && store.game.cells[3] === store.game.cells[5]) {
+//     ui.winGameSuccess()
+//   } else if (store.game.cells[6] === store.game.cells[7] && store.game.cells[6] === store.game.cells[8]) {
+//     ui.winGameSuccess()
+//   }
+// }
 
 const onNewGame = (event) => {
   event.preventDefault()
@@ -71,8 +70,8 @@ const onCountGame = (event) => {
 module.exports = {
   onBoxClick: onBoxClick,
   onNewGame: onNewGame,
-  // onUpdateGame: onUpdateGame,
-  onCountGame: onCountGame,
-  checkWin: checkWin
+  onCountGame: onCountGame
+  // TO DO
+  // checkWin: checkWin
 
 }

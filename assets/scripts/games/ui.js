@@ -27,13 +27,14 @@ const newGameFailure = () => {
 
 const countGameSuccess = (response) => {
   store.game = response.game
-  // console.log(response)
+  console.log(response)
 
   const gamesPlayed = store.game.length
   $('#message').text('Games Played ' + gamesPlayed)
   // placeholder - need to run a function inside event
 }
-const countGameFailure = () => {
+const countGameFailure = (response) => {
+  console.log(response)
   $('#message').text('Something went wrong, try again')
 }
 
@@ -52,6 +53,16 @@ const winGameSuccess = (response) => {
   store.game = response.game
   playerTurn = playerTurn === 'O' ? 'X' : 'O'
   $('#message').text('Player ' + playerTurn + ' Wins')
+  $('#new-game-button').show()
+  $('#game').show()
+  $('#sign-out-user-form').show()
+}
+
+const drawGameSuccess = (response) => {
+  $('#message').text('Draw! Play Again')
+  $('#new-game-button').show()
+  $('#game').show()
+  $('#sign-out-user-form').show()
 }
 
 module.exports = {
@@ -61,5 +72,6 @@ module.exports = {
   countGameFailure: countGameFailure,
   onBoxClickSuccess: onBoxClickSuccess,
   onBoxClickFailure: onBoxClickFailure,
-  winGameSuccess: winGameSuccess
+  winGameSuccess: winGameSuccess,
+  drawGameSuccess: drawGameSuccess
 }

@@ -41,7 +41,7 @@ const signOutSuccess = () => {
   $('#sign-in-user-form').show()
   $('#new-game-button').hide()
   $('#change-password-user-form').hide()
-  $('.container').hide()
+  $('#game').hide()
   $('#sign-out-user-form').hide()
   $('#update-game-button').hide()
   $('#index-game-button').hide()
