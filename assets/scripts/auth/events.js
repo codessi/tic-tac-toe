@@ -32,7 +32,7 @@ const onChangePassword = (event) => {
   const form = event.target
 
   const data = getFormFields(form)
-  // console.log(data, 'data in change password')
+  console.log(data, 'data in change password')
 
   api.changePassword(data)
     .then(ui.changePasswordSuccess)

@@ -55,7 +55,7 @@ As a user, I want < to keep score > so that < I can win >.**
 
 List of technologies used:
 
-**HTML, CSS(SCSS), JavaScript, bootstrap, JQuery, JSON**
+**HTML, CSS(SCSS), JavaScript, JQuery, JSON**
 
 Problem Solving strategy, development process, planning:
 
