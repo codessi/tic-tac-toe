@@ -1,12 +1,13 @@
 'use strict'
 
-const store = require('../store')
+const store = require('./../store')
 
 const signUpSuccess = (response) => {
   $('#message').text('You are all signed up ' + response.user.email)
+  $('#sign-up-user-form').trigger('reset')
   $('#sign-up-user-form').hide()
-  $('#change-password-user-form').show()
-  $('#sign-out-user-form').show()
+  $('#change-password-user-form').hide()
+  $('#sign-out-user-form').hide()
 }
 
 const signUpFailure = () => {
@@ -25,11 +26,14 @@ const signInSuccess = (response) => {
 }
 const signInFailure = () => {
   $('#message').text('Something went wrong, try again')
+  $('#sign-in-user-form').trigger('reset')
 }
 
 const changePasswordSuccess = (response) => {
   $('#message').text('Success! Password was changed')
-  $('#sign-in-user-form').trigger('reset')
+  $('#sign-in-user-form').show()
+  $('#change-password-user-form').trigger('reset')
+  $('#change-password-user-form').show()
 }
 const changePasswordFailure = () => {
   $('#message').text('Something went wrong, try again')

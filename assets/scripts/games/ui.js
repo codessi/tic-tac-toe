@@ -1,9 +1,6 @@
 'use strict'
 
-const store = require('../store')
-
-
-let playerTurn = 'X'
+const store = require('./../store')
 
 const newGameSuccess = (response) => {
   store.game = response.game
@@ -26,10 +23,10 @@ const newGameFailure = () => {
 }
 
 const countGameSuccess = (response) => {
-  store.game = response.game
+  store.games = response.games
   console.log(response)
 
-  const gamesPlayed = store.game.length
+  const gamesPlayed = store.games.length
   $('#message').text('Games Played ' + gamesPlayed)
   // placeholder - need to run a function inside event
 }
@@ -38,32 +35,33 @@ const countGameFailure = (response) => {
   $('#message').text('Something went wrong, try again')
 }
 
+let playerTurn = 'X'
+
 const onBoxClickSuccess = (response) => {
   store.game = response.game
   playerTurn = playerTurn === 'O' ? 'X' : 'O'
   $('#message').text('Players Turn: ' + playerTurn)
   console.log(store.game)
+  // This should be good to go once I can reset the board and each new game starts with X
 }
 
 const onBoxClickFailure = () => {
   $('#message').text('Something went wrong, try again')
 }
 
-const winGameSuccess = (response) => {
-  store.game = response.game
-  playerTurn = playerTurn === 'O' ? 'X' : 'O'
-  $('#message').text('Player ' + playerTurn + ' Wins')
-  $('#new-game-button').show()
-  $('#game').show()
-  $('#sign-out-user-form').show()
-}
-
-const drawGameSuccess = (response) => {
-  $('#message').text('Draw! Play Again')
-  $('#new-game-button').show()
-  $('#game').show()
-  $('#sign-out-user-form').show()
-}
+// const onXwin = (response) => {
+//   $('#message').text('X wins')
+// }
+//
+// const onOwin = (response) => {
+//   $('#message').text('X wins')
+// }
+// const drawGameSuccess = (response) => {
+//   $('#message').text('Draw! Play Again')
+//   $('#new-game-button').show()
+//   $('#game').show()
+//   $('#sign-out-user-form').show()
+// }
 
 module.exports = {
   newGameSuccess: newGameSuccess,
@@ -71,7 +69,9 @@ module.exports = {
   countGameSuccess: countGameSuccess,
   countGameFailure: countGameFailure,
   onBoxClickSuccess: onBoxClickSuccess,
-  onBoxClickFailure: onBoxClickFailure,
-  winGameSuccess: winGameSuccess,
-  drawGameSuccess: drawGameSuccess
+  onBoxClickFailure: onBoxClickFailure
+  // onXwin: onXwin,
+  // onOwin: onOwin
+  // winGameSuccess: winGameSuccess,
+  // drawGameSuccess: drawGameSuccess
 }
