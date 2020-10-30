@@ -16,7 +16,6 @@ $(() => {
   $('#sign-up-user-form').on('submit', events.onSignUp)
   $('#sign-in-user-form').on('submit', events.onSignIn)
   $('#new-game-button').on('click', gamesEvents.onNewGame)
-  $('#update-game-button').on('click', gamesEvents.onUpdateGame)
   $('#index-game-button').on('click', gamesEvents.onCountGame)
   $('#change-password-user-form').on('submit', events.onChangePassword)
   $('.box').on('click', gamesEvents.onBoxClick)

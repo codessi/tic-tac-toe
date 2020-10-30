@@ -2,13 +2,40 @@
 
 const api = require('./api')
 const ui = require('./ui')
-const store = require('./../store')
+const store = require('../store')
 
-let currentPlayer = 'X'
+store.currentPlayer = 'X'
+store.board = ['', '', '', '', '', '', '', '', '']
 let gameState = {
   moves: 0,
   over: false,
   winningPlayer: ''
+}
+
+const changePlayer = function () {
+  if (store.currentPlayer === 'X') {
+    store.currentPlayer = 'O'
+  } else {
+    store.currentPlayer = 'X'
+  }
+}
+
+const onNewGame = (event) => {
+  event.preventDefault()
+  gameState = {
+    moves: 0,
+    over: false,
+    winningPlayer: ''
+  }
+  store.currentPlayer = 'X'
+
+  const button = event.click
+  // console.log(button, 'working')
+  // console.log(JSON.stringify(button))
+
+  api.newGame(button)
+    .then(ui.newGameSuccess)
+    .catch(ui.newGameFailure)
 }
 
 const checkWinner = (array) => {
@@ -57,48 +84,37 @@ const checkWinner = (array) => {
 const onBoxClick = (event) => {
   event.preventDefault()
   const box = $(event.target)
+  const boxIndex = $(event.target).data('box-index')
 
-  const boxIndex = box.data('box-index')
-  console.log('box index ', boxIndex)
+  if (gameState.winningPlayer === 'Tie') {
+    $('#message').text('Game ended in a draw! Play Again!!')
+  } else if (gameState.over === true) {
+    // $('#game').css('pointer-events', 'none')
+    $('#message').text(`${gameState.winningPlayer} is the Winner!`)
+  } else if ($(event.target).text() !== '') {
+    ui.takenSpot()
+  } else {
+    store.game.cells[boxIndex] = store.currentPlayer
+    box.css('background', 'transparent')
 
+    // box.css('pointer-events', 'none')
+    console.log('box index ', boxIndex)
+    console.log('players turn ', store.currentPlayer)
+    console.log(store.game.cells)
+    console.log(gameState.over)
 
-  box.css('pointer-events', 'none')
-  box.css('background', 'transparent').text(currentPlayer)
-  console.log('players turn ', currentPlayer)
-
-  api.updateGame(boxIndex, currentPlayer, gameState.over)
-    .then(ui.onBoxClickSuccess)
-    .then(function () {
-      currentPlayer = currentPlayer === 'O' ? 'X' : 'O'
-      gameState.moves++
-      checkWinner(store.game.cells)
-      if (gameState.winningPlayer === 'Tie') {
-        $('#message').text('Game ended in a draw! Play Again!!')
-      } else if (gameState.over === true) {
-        $('#game').css('pointer-events', 'none')
-        $('#message').text(`${gameState.winningPlayer} is the Winner!`)
-      }
-    })
-    .catch(ui.onBoxClickFailure)
+    api.updateGame(boxIndex, store.currentPlayer, gameState.over)
+      .then(function (data) {
+        $(event.target).text(store.currentPlayer)
+        checkWinner()
+        changePlayer()
+        gameState.moves++
+        ui.onBoxClickSuccess(data)
+      })
+      .catch(ui.onBoxClickFailure)
+  }
 }
 // passthrough values for when a new game is started to clear/reset the board
-const onNewGame = (event) => {
-  event.preventDefault()
-  currentPlayer = 'X'
-  gameState = {
-    moves: 0,
-    over: false,
-    winningPlayer: ''
-  }
-
-  const button = event.click
-  // console.log(button, 'working')
-  // console.log(JSON.stringify(button))
-
-  api.newGame(button)
-    .then(ui.newGameSuccess)
-    .catch(ui.newGameFailure)
-}
 
 const onCountGame = (event) => {
   event.preventDefault()
@@ -109,10 +125,10 @@ const onCountGame = (event) => {
 }
 
 module.exports = {
-  currentPlayer: currentPlayer,
   gameState: gameState,
-  onBoxClick: onBoxClick,
+  changePlayer: changePlayer,
   onNewGame: onNewGame,
+  onBoxClick: onBoxClick,
   onCountGame: onCountGame,
   checkWinner: checkWinner
 
